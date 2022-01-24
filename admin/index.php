@@ -3,7 +3,7 @@
     <div id="wrapper">
         <!-- Navigation -->
         <?php include "includes/admin_nav.php" ?>
-
+        
         <div id="page-wrapper">
 
             <div class="container-fluid">

@@ -5,7 +5,7 @@
         $post_title = $_POST['title'];
         $post_author = $_POST['author'];
         $post_cat = $_POST['post_category'];
-        $post_status = $_POST['status'];
+        $post_status = $_POST['post_status'];
 
         $post_img = $_FILES['post_img']['name'];
         $post_img_temp = $_FILES['post_img']['tmp_name'];
@@ -23,6 +23,11 @@
         $create_post_query = mysqli_query($connection, $query);
 
         confirm_query($create_post_query);
+
+
+        $the_post_id = mysqli_insert_id($connection);
+
+        echo "<p class='bg-success'>Post has been added. <a href='../post.php?p_id=$the_post_id'>View Post &#8594;</a> Or <a href='posts.php?source=add_post'>Add more posts &#8594;</a></p>";
 
     }
 
@@ -72,9 +77,10 @@
         <!-- <label for="status">Post Status</label>
         <input type="text" class="form-control" name="status"> -->
 
-        <select name="status" id="status">
-            <option>published</option>
-            <option value="draft">draft</option>
+        <select name="post_status" id="status">
+            <option value="draft">Post Status</option>
+            <option value="published">Published</option>
+            <option value="draft">Draft</option>
         </select>
     </div>
     

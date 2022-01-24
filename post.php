@@ -68,7 +68,12 @@
 
           <?php
           
-              if(isset($_POST['create_comment'])) {
+              if (
+                  isset ($_POST['create_comment']) && 
+                  !empty ($_POST['comment_author']) && 
+                  !empty ($_POST['comment_email']) && 
+                  !empty ($_POST['comment_content']) 
+                 ) {
 
                 $the_post_id = $_GET['p_id'];
 
@@ -87,6 +92,9 @@
                 $update_comment_count = mysqli_query($connection, $query);
 
 
+              } else {
+                
+                echo "<script> alert('Fields cannot be empty!')</script>";
               }
 
           ?>

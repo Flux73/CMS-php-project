@@ -3,9 +3,6 @@
 
     <div id="wrapper">
 
-
-
-
         <!-- Navigation -->
         <?php include "includes/admin_nav.php" ?>
 
@@ -47,8 +44,6 @@
                                 // Code here
                             }
 
-                           
-
                         ?>
                         
                     </div>
@@ -59,8 +54,6 @@
             <!-- /.container-fluid -->
 
         </div>
-
-
 
         <!-- /#page-wrapper -->
 

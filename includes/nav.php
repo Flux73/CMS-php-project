@@ -56,6 +56,8 @@
             ?>
             </li>
 
+            <li><a href="registration.php">Resgistration</a></li>
+
           </ul>
         </div>
         <!-- /.navbar-collapse -->

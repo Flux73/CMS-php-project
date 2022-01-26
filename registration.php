@@ -8,28 +8,40 @@
         $email = mysqli_real_escape_string($connection, $_POST['email']);
         $password = mysqli_real_escape_string($connection, $_POST['password']);
 
-        $query = "SELECT randSalt FROM users";
-        $select_randsalt_query = mysqli_query($connection, $query);
-
-        if (!$select_randsalt_query) {
-            die("Query Failed!" . mysqli_error($connection));
+        if (!empty($_POST['username']) && 
+            !empty($_POST['email']) && 
+            !empty($_POST['password'])
+            ) {     
+                $query = "SELECT randSalt FROM users";
+                $select_randsalt_query = mysqli_query($connection, $query);
+                
+                if (!$select_randsalt_query) {
+                    die("Query Failed!" . mysqli_error($connection));
+                }
+                
+                $row = mysqli_fetch_assoc($select_randsalt_query);
+                $salt = $row['randSalt'];
+                
+                $password = crypt($password, $salt);
+                
+                $query = "INSERT INTO users (username, user_email, user_password, user_role) ";
+                $query .= "VALUES ('$username', '$email', '$password', 'subscriber')";
+                
+                $add_new_users = mysqli_query($connection, $query);
+                
+                if (!$add_new_users) {
+                    die("Query Failed!" . mysqli_error($connection));
+                }
+                
+                $message = "Your registration has been submitted";
+                
+                // header('Location: index.php');
+                
+            } else {
+                $message = "Fields cannot be empty";
         }
-
-        $row = mysqli_fetch_assoc($select_randsalt_query);
-        $salt = $row['randSalt'];
-        
-
-        $query = "INSERT INTO users (username, user_email, user_password, user_role) ";
-        $query .= "VALUES ('$username', '$email', '$password', 'subscriber')";
-
-        $add_new_users = mysqli_query($connection, $query);
-
-        if (!$add_new_users) {
-            die("Query Failed!" . mysqli_error($connection));
-        }
-
-        header('Location: index.php');
-        
+    } else {
+        $message = '';
     }
 
 ?>
@@ -49,6 +61,7 @@
                 <div class="form-wrap">
                 <h1>Register</h1>
                     <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
+                        <h6 class="text-center"><?php echo $message; ?></h6>
                         <div class="form-group">
                             <label for="username" class="sr-only">username</label>
                             <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username">

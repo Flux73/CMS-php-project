@@ -16,11 +16,11 @@
 
         $select_user_query = mysqli_query($connection, $query);
 
-        if(!$select_user_query) {
+        if (!$select_user_query) {
             die("Query Failed!" . mysqli_error($connection));
         }
 
-        while($row = mysqli_fetch_assoc($select_user_query)) {
+        while ($row = mysqli_fetch_assoc($select_user_query)) {
 
             $db_user_id = $row['user_id'];
             $db_username = $row['username'];
@@ -31,7 +31,9 @@
 
         }
 
-        if($username === $db_username && $password === $db_password) {
+        $password = crypt($password, $db_password);
+
+        if ($username === $db_username && $password === $db_password) {
 
             $_SESSION['username'] = $db_username;
             $_SESSION['firstname'] = $db_user_firstname;

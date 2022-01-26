@@ -35,6 +35,12 @@
 
             move_uploaded_file($user_img_temp, "../img/$user_img");
 
+            $query = "SELECT randSalt FROM users";
+            $fetch_the_salt = mysqli_query($connection, $query);
+            $row = mysqli_fetch_assoc($fetch_the_salt);
+            $salt = $row['randSalt'];
+            $user_password = crypt($user_password, $salt);
+
             $query = "UPDATE users SET ";
 
             $query .= "username = '$username', ";
@@ -58,7 +64,7 @@
 
 <form action="" method="post" enctype="multipart/form-data">
 
-
+    <?php if (isset($_POST['edit_user'])) echo "<p>User Updated <a href='users.php'>View Users?</a></p>";?>
     <div class="form-group">
         <label for="author">Firstname</label>
         <input type="text" value="<?php echo $user_firstname ?>" class="form-control" name="user_firstname">
@@ -76,7 +82,7 @@
 
         <select name="user_role" id="post_category">
 
-            <option value="subscriber"><?php echo $user_role; ?></option>
+            <option value="<?php echo $user_role; ?>"><?php echo $user_role; ?></option>
             <!-- <option value="admin" selected="">Admin</option>
             <option value="subscriber">Subscriber</option> -->
 
